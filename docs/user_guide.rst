@@ -453,23 +453,23 @@ The table below provides a list of the configuration variables which may be used
 
 | **Variable Name** | **Default Value** | **Purpose** |
 | ----------------- | ----------------- | ----------- |
-| *CONFDIR | `/etc/nhc` | Directory for NHC configuration data |
-| *CONFFILE | `$CONFDIR/$NAME.conf` | Path to NHC config file  |
+| * CONFDIR | `/etc/nhc` | Directory for NHC configuration data |
+| * CONFFILE | `$CONFDIR/$NAME.conf` | Path to NHC config file  |
 | DEBUG | `0` | Set to `1` to activate debugging output |
-| *DETACHED_MODE | `0` | Set to `1` to activate [Detached Mode](#detached-mode) |
-| *DETACHED_MODE_FAIL_NODATA | `0` | Set to `1` to cause [Detached Mode](#detached-mode) to fail if no prior check result exists |
+| * DETACHED_MODE | `0` | Set to `1` to activate [Detached Mode](#detached-mode) |
+| * DETACHED_MODE_FAIL_NODATA | `0` | Set to `1` to cause [Detached Mode](#detached-mode) to fail if no prior check result exists |
 | DF_CMD | `df` | Command used by `check_fs_free`, `check_fs_size`, and `check_fs_used` |
 | DF_FLAGS | `-Tka` | Flags to pass to `$DF_CMD` for space checks. **_NOTE:_  Adding the `-l` flag is _strongly_ recommended if only checking local filesystems.** |
 | DFI_CMD | `df` | Command used by `check_fs_inodes`, `check_fs_ifree`, and `check_fs_iused` |
 | DFI_FLAGS | `-Tia` | Flags to pass to `$DFI_CMD`. **_NOTE:_  Adding the `-l` flag is _strongly_ recommended if only checking local filesystems.** |
-| *FORCE_SETSID | `1` |  Re-execute NHC as a session leader if it isn't already one at startup |
-| *HELPERDIR | `/usr/libexec/nhc` | Directory for NHC helper scripts |
-| *HOSTNAME | Set from `/proc/sys/kernel/hostname` | Canonical name of current node |
-| *HOSTNAME_S | `$HOSTNAME` truncated at first `.` | Short name (no domain or subdomain) of current node |
+| * FORCE_SETSID | `1` |  Re-execute NHC as a session leader if it isn't already one at startup |
+| * HELPERDIR | `/usr/libexec/nhc` | Directory for NHC helper scripts |
+| * HOSTNAME | Set from `/proc/sys/kernel/hostname` | Canonical name of current node |
+| * HOSTNAME_S | `$HOSTNAME` truncated at first `.` | Short name (no domain or subdomain) of current node |
 | IGNORE_EMPTY_NOTE | `0` | Set to `1` to treat empty notes like NHC-assigned notes (<1.2.1 behavior) |
-| *INCDIR | `$CONFDIR/scripts` | Directory for NHC check scripts |
+| * INCDIR | `$CONFDIR/scripts` | Directory for NHC check scripts |
 | JOBFILE_PATH | TORQUE/PBS:  `$PBS_SERVER_HOME/mom_priv/jobs` <br /> SLURM:  `$SLURM_SERVER_HOME` | Directory on compute nodes where job records are kept |
-| *LOGFILE | `>>/var/log/nhc.log` | File name/path or BASH-syntax directive for logging output (`-` for `STDOUT`) |
+| * LOGFILE | `>>/var/log/nhc.log` | File name/path or BASH-syntax directive for logging output (`-` for `STDOUT`) |
 | LSF_BADMIN | `badmin` | Command to use for LSF's `badmin` (may include path) |
 | LSF_BHOSTS | `bhosts` | Command to use for LSF's `bhosts` (may include path) |
 | LSF_OFFLINE_ARGS | `hclose -C` | Arguments to LSF's `badmin` to offline node |
@@ -481,7 +481,7 @@ The table below provides a list of the configuration variables which may be used
 | MCELOG_MAX_CORRECTED_RATE | `9` | Maximum number of **corrected** MCEs allowed before `check_hw_mcelog()` returns failure |
 | MCELOG_MAX_UNCORRECTED_RATE | `0` | Maximum number of **uncorrected** MCEs allowed before `check_hw_mcelog()` returns failure |
 | MDIAG_CMD | `mdiag` | Command to use to invoke Moab's `mdiag` command (may include path) |
-| *NAME | `nhc` | Used to populate default paths/filenames for configuration |
+| * NAME | `nhc` | Used to populate default paths/filenames for configuration |
 | NHC_AUTH_USERS | `root nobody` | Users authorized to have arbitrary processes running on compute nodes |
 | NHC_CHECK_ALL | `0` | Forces all checks to be non-fatal.  Displays each failure message, reports total number of failed checks, and returns that number. |
 | NHC_CHECK_FORKED | `0` | Forces each check to be executed in a separate forked subprocess.  NHC attempts to detect directives which set environment variables to avoid forking those.  Enhances resiliency if checks hang. |
@@ -507,7 +507,7 @@ The table below provides a list of the configuration variables which may be used
 | SLURM_SINFO | `sinfo` | Command to use for SLURM's `sinfo` (may include path) |
 | STAT_CMD | `/usr/bin/stat` | Command to use to `stat()` files |
 | STAT_FMT_ARGS | `-c` | Parameter to introduce format string to `stat` command |
-| *TIMEOUT | `30` | Watchdog timer (in seconds) |
+| * TIMEOUT | `30` | Watchdog timer (in seconds) |
 | VERBOSE | `0` | Set to `1` to display each check line before it's executed |
 
 Example usage:
