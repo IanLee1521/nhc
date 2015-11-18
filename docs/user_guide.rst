@@ -324,16 +324,16 @@ Options
 
 | **Command-Line Option** | **Equivalent Configuration Variable** | **Purpose** |
 | ----------------------- | ------------------------------------- | ----------- |
-| `-D` _`confdir`_ | `CONFDIR=`_`confdir`_ | Use config directory _`confdir`_ (default: `/etc/`_`name`_) |
+| `-D` `confdir` | `CONFDIR=confdir` | Use config directory `confdir` (default: `/etc/name`) |
 | `-a` | `NHC_CHECK_ALL=1` | Run ALL checks; don't exit on first failure (useful for `cron`-based monitoring) |
-| `-c` _`conffile`_ | `CONFFILE=`_`conffile`_ | Load config from _`conffile`_ (default: _`confdir`_`/`_`name`_`.conf`) |
+| `-c` `conffile` | `CONFFILE=conffile` | Load config from `conffile` (default: `confdir/name.conf`) |
 | `-d` | `DEBUG=1` | Activate debugging output |
-| `-f` | `NHC_CHECK_FORKED=1` | Run each check in a separate background process (_EXPERIMENTAL_) |
+| `-f` | `NHC_CHECK_FORKED=1` | Run each check in a separate background process (*EXPERIMENTAL*) |
 | `-h` | N/A | Show command line help |
-| `-l` _`logspec`_ | `LOGFILE=`_`logspec`_ | File name/path or BASH-syntax directive for logging output (`-` for `STDOUT`) |
-| `-n` _`name`_ | `NAME=`_`name`_ | Set program name to _`name`_ (default: `nhc`); see -D & -c |
+| `-l` `logspec` | `LOGFILE=logspec` | File name/path or BASH-syntax directive for logging output (`-` for `STDOUT`) |
+| `-n` `name` | `NAME=name` | Set program name to `name` (default: `nhc`); see -D & -c |
 | `-q` | `SILENT=1` | Run quietly |
-| `-t` _`timeout`_ | `TIMEOUT=`_`timeout`_ | Use timeout of _`timeout`_ seconds (default: 30) |
+| `-t` `timeout` | `TIMEOUT=``timeout` | Use timeout of `timeout` seconds (default: 30) |
 | `-v` | `VERBOSE=1` | Run verbosely (i.e., show check progress) |
 
 .. note::
@@ -548,14 +548,14 @@ check_cmd_output
 
 `check_cmd_output [-t timeout] [-r retval] [-m match [...]] { -e 'command [arg1 [...]]' | command [arg1 [...]] }`
 
-`check_cmd_output` executes a `command` and compares each line of its output against any `mstr`s ([match strings](#match-strings)) passed in.  If any positive match **is not** found in the command output, or if any negative match **is** found, the check fails.  The check also fails if the exit status of `command` does not match _`retval`_ (if supplied) or if the `command` fails to complete within _`timeout`_ seconds (default 5).  Options to this check are as follows:
+`check_cmd_output` executes a `command` and compares each line of its output against any `mstr`s ([match strings](#match-strings)) passed in.  If any positive match **is not** found in the command output, or if any negative match **is** found, the check fails.  The check also fails if the exit status of `command` does not match `retval` (if supplied) or if the `command` fails to complete within `timeout` seconds (default 5).  Options to this check are as follows:
 
 | **Check Option** | **Purpose** |
 | ---------------- | ----------- |
-| `-e``command` | Execute `command` and gather its output.  The `command` is split on word boundaries, much like `/bin/sh -c '...'` does. |
-| `-m``mstr` | If negated, no line of the output may match the specified `mstr` expression.  Otherwise, at least one line must match.  This option may be used multiple times as needed. |
-| `-r`_`retval`_ | Exit status (a.k.a. return code or return value) of `command` must equal _`retval`_ or the check will fail. |
-| `-t`_`secs`_ | Command will timeout if not completed within _`secs`_ seconds (default is 5). |
+| `-e` `command` | Execute `command` and gather its output.  The `command` is split on word boundaries, much like `/bin/sh -c '...'` does. |
+| `-m` `mstr` | If negated, no line of the output may match the specified `mstr` expression.  Otherwise, at least one line must match.  This option may be used multiple times as needed. |
+| `-r` `retval` | Exit status (a.k.a. return code or return value) of `command` must equal `retval` or the check will fail. |
+| `-t` `secs` | Command will timeout if not completed within `secs` seconds (default is 5). |
 
 .. note::
 
@@ -569,12 +569,12 @@ check_cmd_status
 
 `check_cmd_status [-t timeout] -r retval command [arg1 [...]]`
 
-`check_cmd_status` executes a `command` and redirects its output to `/dev/null`.  The check fails if the exit status of `command` exit status does not match _`retval`_ or if the `command` fails to complete within _`timeout`_ seconds (default 5).  Options to this check are as follows:
+`check_cmd_status` executes a `command` and redirects its output to `/dev/null`.  The check fails if the exit status of `command` exit status does not match `retval` or if the `command` fails to complete within `timeout` seconds (default 5).  Options to this check are as follows:
 
 | **Check Option** | **Purpose** |
 | ---------------- | ----------- |
-| `-r`_`retval`_ | Exit status (a.k.a. return code or return value) of `command` must equal _`retval`_ or the check will fail. |
-| `-t`_`secs`_ | Command will timeout if not completed within _`secs`_ seconds (default is 5). |
+| `-r` `retval` | Exit status (a.k.a. return code or return value) of `command` must equal `retval` or the check will fail. |
+| `-t` `secs` | Command will timeout if not completed within `secs` seconds (default is 5). |
 
 _**Example** (Make sure SELinux is disabled)_:  `check_cmd_status -t 1 -r 1 selinuxenabled`
 
@@ -590,7 +590,7 @@ See the `dmidecode` man page for more details.
 
 .. warning::
 
-    Although _`string`_ is technically a [match string](#match-strings), and supports negation in its own right, you probably don't want to use negated [match strings](#match-strings) here.  Passing the `-n` or `!` parameters to the check means, "check all relevant DMI data and pass the check only if no matching line is found."  Using a negated [match string](#match-strings) here would mean, "The check passes as soon as _ANY_ non-matching line is found" -- almost certainly not the desired behavior!  A subtle but important distinction!
+    Although `string` is technically a [match string](#match-strings), and supports negation in its own right, you probably don't want to use negated [match strings](#match-strings) here.  Passing the `-n` or `!` parameters to the check means, "check all relevant DMI data and pass the check only if no matching line is found."  Using a negated [match string](#match-strings) here would mean, "The check passes as soon as _ANY_ non-matching line is found" -- almost certainly not the desired behavior!  A subtle but important distinction!
 
 _**Example** (check for BIOS version)_:  `check_dmi_data_match "BIOS Information: Version: 1.0.37"`
 
@@ -630,20 +630,20 @@ check_file_stat
 
 | **Check Option** | **Purpose** |
 | ---------------- | ----------- |
-| `-D`_`num`_ | Specifies that the device ID for _filename(s)_ should be _`num`_ (decimal or hex) |
-| `-G`_`name`_ | Specifies that _filename(s)_ should be owned by group _`name`_ |
-| `-M`_`mode`_ | Specifies that the permissions for _filename(s)_ should include at LEAST the bits set in _`mode`_ |
-| `-N`_`secs`_ | Specifies that the `ctime` (i.e., inode change time) of _filename(s)_ should be newer than _`secs`_ seconds ago |
-| `-O`_`secs`_ | Specifies that the `ctime` (i.e., inode change time) of _filename(s)_ should be older than _`secs`_ seconds ago |
-| `-T`_`num`_ | Specifies that the minor device number for _filename(s)_ be _`num`_ |
-| `-U`_`name`_ | Specifies that filename(s) should be owned by user _`name`_ |
-| `-d`_`num`_ | Specifies that the device ID for _filename(s)_ should be _`num`_ (decimal or hex) |
-| `-g`_`gid`_ | Specifies that _filename(s)_ should be owned by group id _`gid`_ |
-| `-m`_`mode`_ | Specifies that the permissions for _filename(s)_ should include at LEAST the bits set in _`mode`_ |
-| `-n`_`secs`_ | Specifies that the `mtime` (i.e., modification time) of _filename(s)_ should be newer than _`secs`_ seconds ago |
-| `-o`_`secs`_ | Specifies that the `mtime` (i.e., modification time) of _filename(s)_ should be older than _`secs`_ seconds ago |
-| `-t`_`num`_ | Specifies that the major device number for _filename(s)_ be _`num`_ |
-| `-u`_`uid`_ | Specifies that _filename(s)_ should be owned by uid _`uid`_ |
+| `-D` `num` | Specifies that the device ID for _filename(s)_ should be `num` (decimal or hex) |
+| `-G``name` | Specifies that _filename(s)_ should be owned by group `name` |
+| `-M` `mode` | Specifies that the permissions for _filename(s)_ should include at LEAST the bits set in `mode` |
+| `-N``secs` | Specifies that the `ctime` (i.e., inode change time) of _filename(s)_ should be newer than `secs` seconds ago |
+| `-O``secs` | Specifies that the `ctime` (i.e., inode change time) of _filename(s)_ should be older than `secs` seconds ago |
+| `-T` `num` | Specifies that the minor device number for _filename(s)_ be `num` |
+| `-U``name` | Specifies that filename(s) should be owned by user `name` |
+| `-d` `num` | Specifies that the device ID for _filename(s)_ should be `num` (decimal or hex) |
+| `-g` `gid` | Specifies that _filename(s)_ should be owned by group id `gid` |
+| `-m` `mode` | Specifies that the permissions for _filename(s)_ should include at LEAST the bits set in `mode` |
+| `-n``secs` | Specifies that the `mtime` (i.e., modification time) of _filename(s)_ should be newer than `secs` seconds ago |
+| `-o``secs` | Specifies that the `mtime` (i.e., modification time) of _filename(s)_ should be older than `secs` seconds ago |
+| `-t` `num` | Specifies that the major device number for _filename(s)_ be `num` |
+| `-u` `uid` | Specifies that _filename(s)_ should be owned by uid `uid` |
 
 _**Example** (Assert correct uid, gid, owner, group, & major/minor device numbers for `/dev/null`)_:  `check_file_stat -u 0 -g 0 -U root -G root -t 1 -T 3 /dev/null`
 
@@ -653,31 +653,31 @@ check_file_test
 
 `check_file_test [-a] [-b] [-c] [-d] [-e] [-f] [-g] [-h] [-k] [-p] [-r] [-s] [-t] [-u] [-w] [-x] [-O] [-G] [-L] [-S] [-N] filename(s)`
 
-`check_file_test` allows the user to assert very simple attributes on one or more files, directories, and/or other filesystem objects based on tests which can be performed via the shell's built-in `test` command.  Each option specifies a test which is applied to each of the _filename(s)_ in order.  NHC internally evaluates the shell expression `test`_`option filename`_ for each option given for each _filename_ specified.  (In other words, passing 2 options and 3 filenames will evaluate 6 `test` expressions in total.)  The check fails if any of the `test` command evaluations returns false.  For efficiency, this check should be used in preference to `check_file_stat` whenever possible as it does not require calling out to the `stat` command.  Options to this check are as follows:
+`check_file_test` allows the user to assert very simple attributes on one or more files, directories, and/or other filesystem objects based on tests which can be performed via the shell's built-in `test` command.  Each option specifies a test which is applied to each of the _filename(s)_ in order.  NHC internally evaluates the shell expression `test <option filename>` for each option given for each `filename` specified.  (In other words, passing 2 options and 3 filenames will evaluate 6 `test` expressions in total.)  The check fails if any of the `test` command evaluations returns false.  For efficiency, this check should be used in preference to `check_file_stat` whenever possible as it does not require calling out to the `stat` command.  Options to this check are as follows:
 
 | **Check Option** | **Purpose** |
 | ---------------- | ----------- |
-| `-a` | Evaluates to true if the _`filename`_ being tested exists (same as `-e`). |
-| `-b` | Evaluates to true if the _`filename`_ being tested exists and is block special. |
-| `-c` | Evaluates to true if the _`filename`_ being tested exists and is character special. |
-| `-d` | Evaluates to true if the _`filename`_ being tested exists and is a directory. |
-| `-e` | Evaluates to true if the _`filename`_ being tested exists. |
-| `-f` | Evaluates to true if the _`filename`_ being tested exists and is a regular file. |
-| `-g` | Evaluates to true if the _`filename`_ being tested exists and is setgid. |
-| `-h` | Evaluates to true if the _`filename`_ being tested exists and is a symbolic link. |
-| `-k` | Evaluates to true if the _`filename`_ being tested exists and has its sticky bit set. |
-| `-p` | Evaluates to true if the _`filename`_ being tested exists and is a named pipe. |
-| `-r` | Evaluates to true if the _`filename`_ being tested exists and is readable. |
-| `-s` | Evaluates to true if the _`filename`_ being tested exists and is not empty. |
-| `-t` | Evaluates to true if the _`filename`_ being tested is a numeric file descriptor which references a valid tty. |
-| `-u` | Evaluates to true if the _`filename`_ being tested exists and is setuid. |
-| `-w` | Evaluates to true if the _`filename`_ being tested exists and is writable. |
-| `-x` | Evaluates to true if the _`filename`_ being tested exists and is executable. |
-| `-O` | Evaluates to true if the _`filename`_ being tested exists and is owned by NHC's EUID. |
-| `-G` | Evaluates to true if the _`filename`_ being tested exists and is owned by NHC's EGID. |
-| `-L` | Evaluates to true if the _`filename`_ being tested exists and is a symbolic link (same as `-h`). |
-| `-S` | Evaluates to true if the _`filename`_ being tested exists and is a socket. |
-| `-N` | Evaluates to true if the _`filename`_ being tested exists and has been modified since it was last read. |
+| `-a` | Evaluates to true if the `filename` being tested exists (same as `-e`). |
+| `-b` | Evaluates to true if the `filename` being tested exists and is block special. |
+| `-c` | Evaluates to true if the `filename` being tested exists and is character special. |
+| `-d` | Evaluates to true if the `filename` being tested exists and is a directory. |
+| `-e` | Evaluates to true if the `filename` being tested exists. |
+| `-f` | Evaluates to true if the `filename` being tested exists and is a regular file. |
+| `-g` | Evaluates to true if the `filename` being tested exists and is setgid. |
+| `-h` | Evaluates to true if the `filename` being tested exists and is a symbolic link. |
+| `-k` | Evaluates to true if the `filename` being tested exists and has its sticky bit set. |
+| `-p` | Evaluates to true if the `filename` being tested exists and is a named pipe. |
+| `-r` | Evaluates to true if the `filename` being tested exists and is readable. |
+| `-s` | Evaluates to true if the `filename` being tested exists and is not empty. |
+| `-t` | Evaluates to true if the `filename` being tested is a numeric file descriptor which references a valid tty. |
+| `-u` | Evaluates to true if the `filename` being tested exists and is setuid. |
+| `-w` | Evaluates to true if the `filename` being tested exists and is writable. |
+| `-x` | Evaluates to true if the `filename` being tested exists and is executable. |
+| `-O` | Evaluates to true if the `filename` being tested exists and is owned by NHC's EUID. |
+| `-G` | Evaluates to true if the `filename` being tested exists and is owned by NHC's EGID. |
+| `-L` | Evaluates to true if the `filename` being tested exists and is a symbolic link (same as `-h`). |
+| `-S` | Evaluates to true if the `filename` being tested exists and is a socket. |
+| `-N` | Evaluates to true if the `filename` being tested exists and has been modified since it was last read. |
 
 _**Example** (Assert correct ownerships and permissions on `/dev/null` similar to above, assuming NHC runs as root)_:  `check_file_test -O -G -c -r -w /dev/null`
 
@@ -687,7 +687,7 @@ check_fs_inodes
 
 `check_fs_inodes mountpoint [min] [max]`
 
-Ensures that the specified _mountpoint_ has at least _min_ but no more than _max_ total inodes.  Either may be blank.
+Ensures that the specified `mountpoint` has at least `_min_` but no more than `_max_` total inodes.  Either may be blank.
 
 > **WARNING:**  Use of this check requires execution of the `/usr/bin/df` command which may HANG in cases of NFS failure!  If you use this check, consider also using [Detached Mode](#detached-mode)!
 
@@ -699,7 +699,7 @@ check_fs_ifree
 
 `check_fs_ifree mountpoint min`
 
-Ensures that the specified _mountpoint_ has at least _min_ free inodes.
+Ensures that the specified `mountpoint` has at least `_min_` free inodes.
 
 > **WARNING:**  Use of this check requires execution of the `/usr/bin/df` command which may HANG in cases of NFS failure!  If you use this check, consider also using [Detached Mode](#detached-mode)!
 
@@ -711,7 +711,7 @@ check_fs_iused
 
 `check_fs_iused mountpoint max`
 
-Ensures that the specified _mountpoint_ has no more than _max_ used inodes.
+Ensures that the specified `mountpoint` has no more than `_max_` used inodes.
 
 > **WARNING:**  Use of this check requires execution of the `/usr/bin/df` command which may HANG in cases of NFS failure!  If you use this check, consider also using [Detached Mode](#detached-mode)!
 
@@ -727,9 +727,9 @@ check_fs_mount
 
 `check_fs_mount mountpoint [source] [fstype] [options]`
 
-`check_fs_mount` examines the list of mounted filesystems on the local machine to verify that the specified entry is present.  _mountpoint_ specifies the directory on the node where the filesystem should be mounted.  _source_ is a [match string](#match-strings) which is compared against the device, whatever that may be (e.g., _server_:/_path_ for NFS or `/dev/sda1` for local).  _fstype_ is a [match string](#match-strings) for the filesystem type (e.g., `nfs`, `ext4`, `tmpfs`).  _options_ is a [match string](#match-strings) for the mount options.  Any number (zero or more) of these 3 items (i.e., sources, types, and/or options) may be specified; additionally, one or more mountpoints may be specified.  Use `-f` for normal filesystems and `-F` for auto-mounted filesystems (to trigger them to be mounted prior to performing the check).
+`check_fs_mount` examines the list of mounted filesystems on the local machine to verify that the specified entry is present.  `mountpoint` specifies the directory on the node where the filesystem should be mounted.  _source_ is a [match string](#match-strings) which is compared against the device, whatever that may be (e.g., _server_:/_path_ for NFS or `/dev/sda1` for local).  _fstype_ is a [match string](#match-strings) for the filesystem type (e.g., `nfs`, `ext4`, `tmpfs`).  _options_ is a [match string](#match-strings) for the mount options.  Any number (zero or more) of these 3 items (i.e., sources, types, and/or options) may be specified; additionally, one or more mountpoints may be specified.  Use `-f` for normal filesystems and `-F` for auto-mounted filesystems (to trigger them to be mounted prior to performing the check).
 
-Unless the `-0` (non-fatal) option is given, this check will fail if any of the specified filesystems is not found or does not match the type(s)/source(s)/option(s) specified.  The `-r` (remount) option will cause NHC to attempt to re-mount missing filesystem(s) by issuing the system command "`mount -o `_`remount_options`_` `_`filesystem`_" in the background as root.  This is "best effort," so success or failure of the mount attempt is not taken into account.  If specified, _missing_action_ is executed if a filesystem is not found.  Also, if specified, _found_action_ is executed for each filesystem which **is** found and correctly mounted.
+Unless the `-0` (non-fatal) option is given, this check will fail if any of the specified filesystems is not found or does not match the type(s)/source(s)/option(s) specified.  The `-r` (remount) option will cause NHC to attempt to re-mount missing filesystem(s) by issuing the system command `mount -o <remount_options> <filesystem>`` in the background as root.  This is "best effort," so success or failure of the mount attempt is not taken into account.  If specified, _missing_action_ is executed if a filesystem is not found.  Also, if specified, _found_action_ is executed for each filesystem which **is** found and correctly mounted.
 
 _**Example** (check for NFS hard-mounted `/home` from `bluearc1:/global/home` and mount if missing)_:  `check_fs_mount -r -s bluearc1:/global/home -t nfs -o *hard* -f /home`
 
@@ -829,7 +829,7 @@ check_hw_ib
 
 `check_hw_ib rate [device]`
 
-`check_hw_ib` determines whether or not an active IB link is present with the specified data rate (in Gb/sec).  Version 1.3 and later support the _`device`_ parameter for specifying the name of the IB device.  Version 1.4.1 and later also verify that the kernel drivers and userspace libraries are the same OFED version.
+`check_hw_ib` determines whether or not an active IB link is present with the specified data rate (in Gb/sec).  Version 1.3 and later support the `device` parameter for specifying the name of the IB device.  Version 1.4.1 and later also verify that the kernel drivers and userspace libraries are the same OFED version.
 
 _**Example** (QDR Infiniband)_:  `check_hw_ib 40`
 
@@ -938,17 +938,17 @@ check_net_ping
 --------------
 `check_net_ping [-I interface] [-W timeout] [-c count] [-i interval] [-s packetsize] [-t ttl] [-w deadline] target(s)`
 
-(Version 1.4.2+) `check_net_ping` provides an NHC-based wrapper around the standard Linux/UNIX `ping` command.  The most common command-line options for `ping` are supported, and any number of hostnames and/or IP addresses may be specified as _`targets`_.  All options specified on the `check_net_ping` command line are passed directly to `ping -q -n` for each _`target`_ specified.  The following options are supported:
+(Version 1.4.2+) `check_net_ping` provides an NHC-based wrapper around the standard Linux/UNIX `ping` command.  The most common command-line options for `ping` are supported, and any number of hostnames and/or IP addresses may be specified as `targets`.  All options specified on the `check_net_ping` command line are passed directly to `ping -q -n` for each `target` specified.  The following options are supported:
 
 | **Check Option** | **Purpose** |
 | ---------------- | ----------- |
-| `-I`_`interface`_ | _`interface`_ is either an address or an interface name from which to send packets |
-| `-W`_`timeout`_ | Wait _`timeout`_ seconds for a response |
-| `-c`_`count`_ | Stop after sending _`count`_ packets |
-| `-i`_`interval`_ | Wait _`interval`_ seconds before sending each packet |
-| `-s`_`packetsize`_ | Specifies that packets with _`packetsize`_ bytes of data be sent |
-| `-t`_`ttl`_ | Set IP Time To Live in each packet to _`ttl`_ |
-| `-w`_`deadline`_ | `ping` will exit after _`deadline`_ seconds regardless of how many packets were sent/received |
+| `-I` `interface` | `interface` is either an address or an interface name from which to send packets |
+| `-W` `timeout` | Wait `timeout` seconds for a response |
+| `-c` `count` | Stop after sending `count` packets |
+| `-i` `interval` | Wait `interval` seconds before sending each packet |
+| `-s` `packetsize` | Specifies that packets with `packetsize` bytes of data be sent |
+| `-t` `ttl` | Set IP Time To Live in each packet to `ttl` |
+| `-w` `deadline` | `ping` will exit after `deadline` seconds regardless of how many packets were sent/received |
 
 _**Example** (check network connectivity to master, io, and xfer nodes)_:  `check_net_ping -W 3 -i 0.25 -c 5 master io000 xfer`
 
@@ -957,9 +957,9 @@ check_net_socket
 ----------------
 `check_net_socket [-0] [-a] [-!] [-n <name>] [-p <proto>] [-s <state>] [-l <locaddr>[:<locport>]] [-r <rmtaddr>[:<rmtport>]] [-t <type>] [-u <user>] [-d <daemon>] [-e <action>] [-E <found_action>]`
 
-(Version 1.4.1+) `check_net_socket` executes either the command `$NETSTAT_CMD $NETSTAT_ARGS` (default:  `netstat -Tanpee -A inet,inet6,unix`) or (if `$NETSTAT_CMD` is not in `$PATH`) the command `$SS_CMD $SS_ARGS` (default:  `ss -anpee -A inet,unix`).  The output of the command is parsed for socket information.  Then each socket is compared with the match criteria passed in to the check:  protocol _`proto`_, state _`state`_, local and/or remote address(es) _`locaddr`_/_`rmtaddr`_ with optional ports _`locport`_/_`rmtport`_, type _`type`_, owner _`user`_, and/or process name _`daemon`_.  If a matching socket is found, _`found_action`_ is executed, and the check returns successfully.  If no match is found, _`action`_ is executed, and the check fails.  Reverse the success/failure logic by specifying `-!` (i.e., if NHC finds one or more matching sockets, the check will fail).
+(Version 1.4.1+) `check_net_socket` executes either the command `$NETSTAT_CMD $NETSTAT_ARGS` (default:  `netstat -Tanpee -A inet,inet6,unix`) or (if `$NETSTAT_CMD` is not in `$PATH`) the command `$SS_CMD $SS_ARGS` (default:  `ss -anpee -A inet,unix`).  The output of the command is parsed for socket information.  Then each socket is compared with the match criteria passed in to the check:  protocol `proto`, state `state`, local and/or remote address(es) `locaddr`/`rmtaddr` with optional ports `locport`/`rmtport`, type `type`, owner `user`, and/or process name _`daemon`_.  If a matching socket is found, _`found_action`_ is executed, and the check returns successfully.  If no match is found, _`action`_ is executed, and the check fails.  Reverse the success/failure logic by specifying `-!` (i.e., if NHC finds one or more matching sockets, the check will fail).
 
-The _`name`_ parameter may be used to label the type of socket being sought (e.g., `-n 'SSH daemon TCP listening socket'`).  If `-0` is specified, the check is non-fatal (i.e., missing matches will be noted but will not terminate NHC.  Use `-a` to locate all matching sockets (mainly for debugging).
+The `name` parameter may be used to label the type of socket being sought (e.g., `-n 'SSH daemon TCP listening socket'`).  If `-0` is specified, the check is non-fatal (i.e., missing matches will be noted but will not terminate NHC.  Use `-a` to locate all matching sockets (mainly for debugging).
 
 _**Example** (search for HTTP daemon IPv4 listening socket and restart if missing)_:  `check_net_socket -n "HTTP daemon" -p tcp -s LISTEN -l '0.0.0.0:80' -d httpd -e 'service httpd start'`
 
@@ -996,15 +996,15 @@ check_ps_cpu
 | ---------------- | ----------- |
 | `-0` | Non-fatal.  Failure of this check will be ignored. |
 | `-a` | Find, report, and act on all matching processes.  Default behavior is to fail check after first matching process. |
-| `-e`_`action`_ | Execute `/bin/bash -c`_`action`_ if matching process is found. |
+| `-e` `action` | Execute `/bin/bash -c <action>` if matching process is found. |
 | `-f` | Full match.  Match against entire command line, not just first word. |
 | `-K` | Kill **parent** of matching process (or processes, if used with `-a`) with SIGKILL.  (NOTE:  Does NOT imply `-k`) |
 | `-k` | Kill matching process (or processes, if used with `-a`) with SIGKILL. |
 | `-l` | Log matching process (or processes, if used with `-a`) to NHC log (`$LOGFILE`). |
-| `-m``mstr` | Look only at processes matching _mstr_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
-| `-r`_`value`_ | Renice matching process (or processes, if used with `-a`) by the specified _`value`_ (may be positive or negative). |
+| `-m` `mstr` | Look only at processes matching _mstr_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
+| `-r` `value` | Renice matching process (or processes, if used with `-a`) by the specified `value` (may be positive or negative). |
 | `-s` | Log matching process (or processes, if used with `-a`) to the syslog. |
-| `-u [!]`_`user`_ | User match.  Matches only processes owned by _user_ (or, if negated, NOT owned by _user_). |
+| `-u [!] `user` | User match.  Matches only processes owned by _user_ (or, if negated, NOT owned by _user_). |
 
 _**Example** (look for non-root-owned process consuming 99% CPU or more; renice it to the max)_:  `check_ps_cpu -u !root -r 20 99%`
 
@@ -1050,13 +1050,13 @@ check_ps_mem
 | ---------------- | ----------- |
 | `-0` | Non-fatal.  Failure of this check will be ignored. |
 | `-a` | Find, report, and act on all matching processes.  Default behavior is to fail check after first matching process. |
-| `-e`_`action`_ | Execute `/bin/bash -c`_`action`_ if matching process is found. |
+| `-e` `action` | Execute `/bin/bash -c <action>` if matching process is found. |
 | `-f` | Full match.  Match against entire command line, not just first word. |
 | `-K` | Kill **parent** of matching process (or processes, if used with `-a`) with SIGKILL.  (NOTE:  Does NOT imply `-k`) |
 | `-k` | Kill matching process (or processes, if used with `-a`) with SIGKILL. |
 | `-l` | Log matching process (or processes, if used with `-a`) to NHC log (`$LOGFILE`). |
-| `-m``mstr` | Look only at processes matching _mstr_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
-| `-r`_`value`_ | Renice matching process (or processes, if used with `-a`) by the specified _`value`_ (may be positive or negative). |
+| `-m` `mstr` | Look only at processes matching _mstr_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
+| `-r` `value` | Renice matching process (or processes, if used with `-a`) by the specified `value` (may be positive or negative). |
 | `-s` | Log matching process (or processes, if used with `-a`) to the syslog. |
 | `-u` [!]_`user`_ | User match.  Matches only processes owned by _user_ (or, if negated, NOT owned by _user_). |
 
@@ -1073,13 +1073,13 @@ check_ps_physmem
 | ---------------- | ----------- |
 | `-0` | Non-fatal.  Failure of this check will be ignored. |
 | `-a` | Find, report, and act on all matching processes.  Default behavior is to fail check after first matching process. |
-| `-e`_`action`_ | Execute `/bin/bash -c`_`action`_ if matching process is found. |
+| `-e` `action` | Execute `/bin/bash -c <action>` if matching process is found. |
 | `-f` | Full match.  Match against entire command line, not just first word. |
 | `-K` | Kill **parent** of matching process (or processes, if used with `-a`) with SIGKILL.  (NOTE:  Does NOT imply `-k`) |
 | `-k` | Kill matching process (or processes, if used with `-a`) with SIGKILL. |
 | `-l` | Log matching process (or processes, if used with `-a`) to NHC log (`$LOGFILE`). |
-| `-m``mstr` | Look only at processes matching _match_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
-| `-r`_`value`_ | Renice matching process (or processes, if used with `-a`) by the specified _`value`_ (may be positive or negative). |
+| `-m` `mstr` | Look only at processes matching _match_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
+| `-r` `value` | Renice matching process (or processes, if used with `-a`) by the specified `value` (may be positive or negative). |
 | `-s` | Log matching process (or processes, if used with `-a`) to the syslog. |
 | `-u` [!]_`user`_ | User match.  Matches only processes owned by _user_ (or, if negated, NOT owned by _user_). |
 
@@ -1097,14 +1097,14 @@ check_ps_service
 | `-0` | Non-fatal.  Failure of this check will be ignored. |
 | `-S` | Start service.  Service `service` will be started if not found running.  Equivalent to `-e '/sbin/service `_`service`_` start'` |
 | `-c` | Cycle service.  Service `service` will be cycled if not found running.  Equivalent to `-e '/sbin/service `_`service`_` stop ; sleep 2 ; /sbin/service `_`service`_` start'` |
-| `-d`_`daemon`_ | Match running process by _daemon_ instead of `service`.  Equivalent to `-m`_`'*daemon'`_ |
-| `-e`_`action`_ | Execute `/bin/bash -c`_`action`_ if process IS NOT found running. |
-| `-E`_`action`_ | Execute `/bin/bash -c`_`action`_ if process IS found running. |
+| `-d` `daemon` | Match running process by `daemon` instead of `service`.  Equivalent to `-m '*daemon'` |
+| `-e` `action` | Execute `/bin/bash -c <action>` if process IS NOT found running. |
+| `-E` `action` | Execute `/bin/bash -c <action>` if process IS found running. |
 | `-f` | Full match.  Match against entire command line, not just first word. |
-| `-k` | Kill service.  Service `service` will be killed (and check will fail) if found running.    Similar to `pkill -9 `_`service`_ |
-| `-m``mstr` | Use _match_ to search the process list for the service.  Default is _`*service`_ |
+| `-k` | Kill service.  Service `service` will be killed (and check will fail) if found running.    Similar to `pkill -9 <service>` |
+| `-m` `mstr` | Use `match` to search the process list for the service.  Default is `*service` |
 | `-r` | Restart service.  Service `service` will be restarted if not found running.  Equivalent to `-e '/sbin/service `_`service`_` restart'` |
-| `-s` | Stop service.  Service `service` will be stopped (and check will fail) if found running.  Performs `/sbin/service `_`service`_` stop` |
+| `-s` | Stop service.  Service `service` will be stopped (and check will fail) if found running.  Performs `/sbin/service <service>` stop` |
 | `-u` [!]_`user`_ | User match.  Matches only processes owned by _user_ (or, if negated, NOT owned by _user_). |
 
 _**Example** (look for a root-owned sshd and start if missing)_:  `check_ps_service -u root -S sshd`
@@ -1120,13 +1120,13 @@ check_ps_time
 | ---------------- | ----------- |
 | `-0` | Non-fatal.  Failure of this check will be ignored. |
 | `-a` | Find, report, and act on all matching processes.  Default behavior is to fail check after first matching process. |
-| `-e`_`action`_ | Execute `/bin/bash -c`_`action`_ if matching process is found. |
+| `-e` `action` | Execute `/bin/bash -c <action>` if matching process is found. |
 | `-f` | Full match.  Match against entire command line, not just first word. |
 | `-K` | Kill **parent** of matching process (or processes, if used with `-a`) with SIGKILL.  (NOTE:  Does NOT imply `-k`) |
 | `-k` | Kill matching process (or processes, if used with `-a`) with SIGKILL. |
 | `-l` | Log matching process (or processes, if used with `-a`) to NHC log (`$LOGFILE`). |
-| `-m``mstr` | Look only at processes matching _match_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
-| `-r`_`value`_ | Renice matching process (or processes, if used with `-a`) by the specified _`value`_ (may be positive or negative). |
+| `-m` `mstr` | Look only at processes matching _match_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
+| `-r` `value` | Renice matching process (or processes, if used with `-a`) by the specified `value` (may be positive or negative). |
 | `-s` | Log matching process (or processes, if used with `-a`) to the syslog. |
 | `-u` [!]_`user`_ | User match.  Matches only processes owned by _user_ (or, if negated, NOT owned by _user_). |
 
@@ -1147,7 +1147,7 @@ check_ps_userproc_lineage
 
 `check_ps_userproc_lineage [action [actions...]]`
 
-`check_ps_userproc_lineage` examines all processes running on the system to check for any processes not owned by an "authorized user" (see previous check) which are not children (directly or indirectly) of the Resource Manager daemon.  Refer to the `$RM_DAEMON_MATCH` [configuration variable](#supported-variables) for how NHC determines the RM daemon process.  If such a rogue process is found, the specified action(s) are taken.  The following actions are valid:  `kill` (terminate the process), `ignore` (do nothing), `log` (write error to log file and continue), `syslog` (write error to syslog and continue), or `die` (fail the check as normal).  The default is "`die`" if no _action_ is specified.
+`check_ps_userproc_lineage` examines all processes running on the system to check for any processes not owned by an "authorized user" (see previous check) which are not children (directly or indirectly) of the Resource Manager daemon.  Refer to the `$RM_DAEMON_MATCH` [configuration variable](#supported-variables) for how NHC determines the RM daemon process.  If such a rogue process is found, the specified action(s) are taken.  The following actions are valid:  `kill` (terminate the process), `ignore` (do nothing), `log` (write error to log file and continue), `syslog` (write error to syslog and continue), or `die` (fail the check as normal).  The default is "`die`" if no `action` is specified.
 
 _**Example** (mark the node bad on rogue user processes)_:  `check_ps_userproc_lineage die`
 
@@ -1168,7 +1168,7 @@ While technically a "check" can be anything the `nhc` driver script can execute,
 Writing Checks
 ==============
 
-The first decision to be made is what to name your check file.  As mentioned above, check files live (by default; see the `$INCDIR` and `$CONFDIR` [configuration variables](#supported-variables)) in `/etc/nhc/scripts/` and are named _`something`_`.nhc`<sup>[2](#footnotes)</sup>.  A file containing utility and general-purpose functions called `common.nhc` can be found here.  All other files placed here by the upstream package follow the naming convention _`siteid_class`_`.nhc` (e.g., the NHC project's file containing hardware checks is named `lbnl_hw.nhc`).  Your _`siteid`_ can be anything you'd like (other than `lbnl`, obviously) but should be recognizable.  The _`class`_ should refer to the subsystem or conceptual group of things you'll be monitoring.
+The first decision to be made is what to name your check file.  As mentioned above, check files live (by default; see the `$INCDIR` and `$CONFDIR` [configuration variables](#supported-variables)) in `/etc/nhc/scripts/` and are named `something.nhc`<sup>[2](#footnotes)</sup>.  A file containing utility and general-purpose functions called `common.nhc` can be found here.  All other files placed here by the upstream package follow the naming convention _`siteid_class`_`.nhc` (e.g., the NHC project's file containing hardware checks is named `lbnl_hw.nhc`).  Your _`siteid`_ can be anything you'd like (other than `lbnl`, obviously) but should be recognizable.  The `class` should refer to the subsystem or conceptual group of things you'll be monitoring.
 
 For purposes of this example, we'll pretend we're from John Sheridan University, using site abbreviation "`jsu`," and we want to write checks for our "`stuff`."
 
@@ -1208,7 +1208,7 @@ If your check may run more than once and does anything that's resource-intensive
     }
 
 
-Next, you need to write your check function(s).  These should be named <code>check_<em>class\_purpose</em></code> where _`class`_ is the same as used previously ("`stuff`" for this example), and _`purpose`_ gives a descriptive name to the check to convey what it checks.  Our example will use the obvious-but-potentially-vague "works" as its purpose, but the name you choose will undoubtedly be more clever.
+Next, you need to write your check function(s).  These should be named <code>check_<em>class\_purpose</em></code> where `class` is the same as used previously ("`stuff`" for this example), and `purpose` gives a descriptive name to the check to convey what it checks.  Our example will use the obvious-but-potentially-vague "works" as its purpose, but the name you choose will undoubtedly be more clever.
 
 If you have created a data-gathering function as shown above and populated one or more cache variables, the first thing your check should do is see if the cache has been populated already.  If not, run your data-gathering function before proceeding with the check.
 
@@ -1261,12 +1261,12 @@ Arrays are an important tool in any sufficiently-capable scripting language.  Ba
 | Syntax | Purpose |
 | ------ | ------- |
 | `declare -a AVAR` | Declare the shell variable `$AVAR` to be an array (not strictly required, but good form). |
-| `AVAR=( ... )` | Assign elements of array `$AVAR` based on the word expansion of the contents of the parentheses.  `...` is one or more words of the form `[`_`subscript`_`]=`_`value`_ or an expression which expands to such.  Only the _`value`_(s) are required. |
-| `${AVAR[`_`subscript`_`]}` | Evaluates to the _`subscript`_<sup>th</sup> element of the array `$AVAR`.  Array indexes in bash start from 0, just like in C or PERL.  _`subscript`_ must evaluate to an integer >= 0. |
+| `AVAR=( ... )` | Assign elements of array `$AVAR` based on the word expansion of the contents of the parentheses.  `...` is one or more words of the form `[`subscript`]=``value` or an expression which expands to such.  Only the `value`(s) are required. |
+| `${AVAR[`subscript`]}` | Evaluates to the `subscript`<sup>th</sup> element of the array `$AVAR`.  Array indexes in bash start from 0, just like in C or PERL.  `subscript` must evaluate to an integer >= 0. |
 | `${#AVAR[*]}` | Evaluates to the number of elements in the array `$AVAR`. |
 | `${AVAR[*]}` | Evaluates to all the values in the `$AVAR` array as a single word (like `$*`).  Use only where keeping values separate doesn't matter. |
 | `"${AVAR[@]}"` | Evaluates to all values in the `$AVAR` array, each as a separate word.  This keeps values distinct (just like `$@` vs. `$*`). |
-| <code>"${AVAR[@]:<em>offset</em>:<em>length</em>}"</code> | Evaluates to the values of `$AVAR` as above, starting at element <code>${AVAR[<em>offset</em>]}</code> and including at most _`length`_ elements.  _`length`_ may be omitted, and _`offset`_ may be negative. |
+| <code>"${AVAR[@]:<em>offset</em>:<em>length</em>}"</code> | Evaluates to the values of `$AVAR` as above, starting at element <code>${AVAR[<em>offset</em>]}</code> and including at most `length` elements.  `length` may be omitted, and `offset` may be negative. |
 
 A more detailed examination of bash arrays can be found [here](http://tldp.org/LDP/abs/html/arrays.html).
 
@@ -1401,15 +1401,15 @@ The following basic variable transformations are available:
 
 | Syntax | Purpose |
 | ------ | ------- |
-| <code>${VAR:<em>offset</em>}</code> | Evaluates to the substring of `$VAR` starting at _`offset`_ and continuing until the end of the string.  If _`offset`_ is negative, it is interpreted relative to the end of `$VAR`. |
-| <code>${VAR:<em>offset</em>:<em>length</em>}</code> | Same as above, but the result will contain at most _`length`_ characters from `$VAR`. |
+| <code>${VAR:<em>offset</em>}</code> | Evaluates to the substring of `$VAR` starting at `offset` and continuing until the end of the string.  If `offset` is negative, it is interpreted relative to the end of `$VAR`. |
+| <code>${VAR:<em>offset</em>:<em>length</em>}</code> | Same as above, but the result will contain at most `length` characters from `$VAR`. |
 | `${#VAR}` | Gives the length, in characters, of the value assigned to `$VAR`. |
-| <code>${VAR#<em>pattern</em>}</code> | Removes the shortest string matching _`pattern`_ from the beginning of `$VAR`. |
-| <code>${VAR##<em>pattern</em>}</code> | Same as above, but the longest string matching _`pattern`_ is removed. |
-| <code>${VAR%<em>pattern</em>}</code> | Removes the shortest string matching _`pattern`_ from the end of `$VAR`. |
-| <code>${VAR%%<em>pattern</em>}</code> | Same as above, but the longest string matching _`pattern`_ is removed. |
-| <code>${VAR/<em>pattern</em>/<em>replacement</em>}</code> | The first string matching _`pattern`_ in `$VAR` is replaced with _`replacement`_.  _`replacement`_ and the last `/` may be omitted to simply remove the matching string.  Patterns starting with `#` or `%` must match beginning or end (respectively) of `$VAR`. |
-| <code>${VAR//<em>pattern</em>/<em>replacement</em>}</code> | Same as above, but ALL strings matching _`pattern`_ are replaced/removed. |
+| <code>${VAR#<em>pattern</em>}</code> | Removes the shortest string matching `pattern` from the beginning of `$VAR`. |
+| <code>${VAR##<em>pattern</em>}</code> | Same as above, but the longest string matching `pattern` is removed. |
+| <code>${VAR%<em>pattern</em>}</code> | Removes the shortest string matching `pattern` from the end of `$VAR`. |
+| <code>${VAR%%<em>pattern</em>}</code> | Same as above, but the longest string matching `pattern` is removed. |
+| <code>${VAR/<em>pattern</em>/<em>replacement</em>}</code> | The first string matching `pattern` in `$VAR` is replaced with `replacement`.  `replacement` and the last `/` may be omitted to simply remove the matching string.  Patterns starting with `#` or `%` must match beginning or end (respectively) of `$VAR`. |
+| <code>${VAR//<em>pattern</em>/<em>replacement</em>}</code> | Same as above, but ALL strings matching `pattern` are replaced/removed. |
 
 So here are some ways the above constructs can be used to do common operations on strings/files:
 
@@ -1429,7 +1429,7 @@ Matching
 
 Matching input data against potential or expected patterns is common to all programming, and NHC is no exception.  As previously mentioned, however, bash 2.x did not have regular expression matching capability.  To abstract this out, NHC's `common.nhc` file (loaded automatically by `nhc` when it runs) provides the `mcheck_regexp()`, `mcheck_range()`, and `mcheck_glob()` functions which return 0 (i.e., bash's "true" or "success" value) if the first argument matches the pattern provided as the second argument.  To allow for a single matching interface to support all styles of matching, the `mcheck()` function is also provided.  If the pattern is surrounded by slashes (e.g., `/pattern/`), `mcheck()` will attempt a regular expression match; if the pattern is surrounded by braces (e.g., `{pattern}`), a range match is attempted; otherwise, it attempts a glob match.  (For older bash versions which lack the regex matching operator, `egrep` is used instead...which unfortunately will mean additional subshells.)  The `mcheck()` function is used to implement the pattern matching of the first field in `nhc.conf` as well as all other occurrences of [match strings (a.k.a. `mstr`s)](#match-strings) used as check parameters throughout the configuration file.
 
-For consistency with NHC's built-in checks, it is recommended that user-supplied checks which require matching functionality do so by simply calling <code>mcheck <em>string</em> <em>expression</em></code> and evaluating the return value.  If true (i.e., 0), _`string`_ did match the `/regex/`, `{range}`, external match expression, or glob supplied as _`expression`_.  If false, the match failed.
+For consistency with NHC's built-in checks, it is recommended that user-supplied checks which require matching functionality do so by simply calling <code>mcheck <em>string</em> <em>expression</em></code> and evaluating the return value.  If true (i.e., 0), `string` did match the `/regex/`, `{range}`, external match expression, or glob supplied as `expression`.  If false, the match failed.
 
 See the earlier section on [Match Strings](#match-strings) for details.
 
