@@ -548,18 +548,18 @@ check_cmd_output
 
 `check_cmd_output [-t timeout] [-r retval] [-m match [...]] { -e 'command [arg1 [...]]' | command [arg1 [...]] }`
 
-`check_cmd_output` executes a _`command`_ and compares each line of its output against any _`mstr`_s ([match strings](#match-strings)) passed in.  If any positive match **is not** found in the command output, or if any negative match **is** found, the check fails.  The check also fails if the exit status of _`command`_ does not match _`retval`_ (if supplied) or if the _`command`_ fails to complete within _`timeout`_ seconds (default 5).  Options to this check are as follows:
+`check_cmd_output` executes a `command` and compares each line of its output against any `mstr`s ([match strings](#match-strings)) passed in.  If any positive match **is not** found in the command output, or if any negative match **is** found, the check fails.  The check also fails if the exit status of `command` does not match _`retval`_ (if supplied) or if the `command` fails to complete within _`timeout`_ seconds (default 5).  Options to this check are as follows:
 
 | **Check Option** | **Purpose** |
 | ---------------- | ----------- |
-| `-e`_`command`_ | Execute _`command`_ and gather its output.  The _`command`_ is split on word boundaries, much like `/bin/sh -c '...'` does. |
-| `-m`_`mstr`_ | If negated, no line of the output may match the specified _`mstr`_ expression.  Otherwise, at least one line must match.  This option may be used multiple times as needed. |
-| `-r`_`retval`_ | Exit status (a.k.a. return code or return value) of _`command`_ must equal _`retval`_ or the check will fail. |
+| `-e``command` | Execute `command` and gather its output.  The `command` is split on word boundaries, much like `/bin/sh -c '...'` does. |
+| `-m``mstr` | If negated, no line of the output may match the specified `mstr` expression.  Otherwise, at least one line must match.  This option may be used multiple times as needed. |
+| `-r`_`retval`_ | Exit status (a.k.a. return code or return value) of `command` must equal _`retval`_ or the check will fail. |
 | `-t`_`secs`_ | Command will timeout if not completed within _`secs`_ seconds (default is 5). |
 
 .. note::
 
-    If the _`command`_ is passed using `-e`, the _`command`_ string is split on word boundaries to create the `argv[]` array for the command.  If passed on the end of the check line, DO NOT quote the command.  Each parameter must be distinct.  Only use quotes to group multiple words into a single argument.  For example, passing _`command`_ as `"service bind restart"` will work if used with `-e` but will fail if passed at the end of the check line (use without quotes instead)!
+    If the `command` is passed using `-e`, the `command` string is split on word boundaries to create the `argv[]` array for the command.  If passed on the end of the check line, DO NOT quote the command.  Each parameter must be distinct.  Only use quotes to group multiple words into a single argument.  For example, passing `command` as `"service bind restart"` will work if used with `-e` but will fail if passed at the end of the check line (use without quotes instead)!
 
 _**Example** (Verify that the `rpcbind` service is alive)_:  `check_cmd_output -t 1 -r 0 -m '/is running/' /sbin/service rpcbind status`
 
@@ -569,11 +569,11 @@ check_cmd_status
 
 `check_cmd_status [-t timeout] -r retval command [arg1 [...]]`
 
-`check_cmd_status` executes a _`command`_ and redirects its output to `/dev/null`.  The check fails if the exit status of _`command`_ exit status does not match _`retval`_ or if the _`command`_ fails to complete within _`timeout`_ seconds (default 5).  Options to this check are as follows:
+`check_cmd_status` executes a `command` and redirects its output to `/dev/null`.  The check fails if the exit status of `command` exit status does not match _`retval`_ or if the `command` fails to complete within _`timeout`_ seconds (default 5).  Options to this check are as follows:
 
 | **Check Option** | **Purpose** |
 | ---------------- | ----------- |
-| `-r`_`retval`_ | Exit status (a.k.a. return code or return value) of _`command`_ must equal _`retval`_ or the check will fail. |
+| `-r`_`retval`_ | Exit status (a.k.a. return code or return value) of `command` must equal _`retval`_ or the check will fail. |
 | `-t`_`secs`_ | Command will timeout if not completed within _`secs`_ seconds (default is 5). |
 
 _**Example** (Make sure SELinux is disabled)_:  `check_cmd_status -t 1 -r 1 selinuxenabled`
@@ -610,7 +610,7 @@ check_file_contents
 
 `check_file_contents file mstr [...]`
 
-`check_file_contents` looks at the specified file and allows one or more (possibly negated) _`mstr`_ [match strings](#match-strings) (glob, regexp, etc.) to be applied to the contents of the file.  The check fails unless ALL specified expressions successfully match the file content, but the order in which they appear in the file need not match the order specified on the check line.  No post-processing is done on the file, but take care to quote any shell metacharacters in your match expressions properly.  Also remember that matching against the contents of large files will slow down NHC and potentially cause a timeout.  Reading of the file stops when all match expressions have been successfully found in the file.
+`check_file_contents` looks at the specified file and allows one or more (possibly negated) `mstr` [match strings](#match-strings) (glob, regexp, etc.) to be applied to the contents of the file.  The check fails unless ALL specified expressions successfully match the file content, but the order in which they appear in the file need not match the order specified on the check line.  No post-processing is done on the file, but take care to quote any shell metacharacters in your match expressions properly.  Also remember that matching against the contents of large files will slow down NHC and potentially cause a timeout.  Reading of the file stops when all match expressions have been successfully found in the file.
 
 The file is only read once per invocation of `check_file_contents`, so if you need to match several expressions in the same file, passing them all to the same check is advisable.
 
@@ -911,7 +911,7 @@ check_moab_sched
 
 `check_moab_sched [-t timeout] [-a alert_match] [-m [!]mstr] [-v version_match]`
 
-`check_moab_sched` executes `mdiag -S -v` and examines its output, similarly to `check_cmd_output`.  In addition to the arbitrary positive/negative _`mstr`_ [match strings](#match-strings), it also accepts an _`alert_match`_ for flagging specific Moab alerts and a _`version_match`_ for making sure the expected version is running.  The check will fail based on any of these matches, or if `mdiag` does not return within the specified timeout.
+`check_moab_sched` executes `mdiag -S -v` and examines its output, similarly to `check_cmd_output`.  In addition to the arbitrary positive/negative `mstr` [match strings](#match-strings), it also accepts an _`alert_match`_ for flagging specific Moab alerts and a _`version_match`_ for making sure the expected version is running.  The check will fail based on any of these matches, or if `mdiag` does not return within the specified timeout.
 
 _**Example** (ensure we're running Moab 7.2.3 and it's not paused)_:  `check_moab_sched -t 45 -m '!/PAUSED/' -v 7.2.3`
 
@@ -920,7 +920,7 @@ check_moab_rm
 -------------
 `check_moab_rm [-t timeout] [-m [!]mstr]`
 
-`check_moab_rm` executes `mdiag -R -v` and examines its output, similarly to `check_cmd_output`.  In addition to the arbitrary positive/negative _`mstr`_ [match strings](#match-strings), it also checks for any RMs which are not in the `Active` state (and fails if any are inactive).  The check will also fail if `mdiag` does not return within the specified timeout.
+`check_moab_rm` executes `mdiag -R -v` and examines its output, similarly to `check_cmd_output`.  In addition to the arbitrary positive/negative `mstr` [match strings](#match-strings), it also checks for any RMs which are not in the `Active` state (and fails if any are inactive).  The check will also fail if `mdiag` does not return within the specified timeout.
 
 _**Example** (basic Moab RM sanity check)_:  `check_moab_rm -t 45`
 
@@ -929,7 +929,7 @@ check_moab_torque
 -----------------
 `check_moab_torque [-t timeout] [-m [!]mstr]`
 
-`check_moab_torque` executes `qmgr -c 'print server'` and examines its output, similarly to `check_cmd_output`.  In addition to the arbitrary positive/negative _`mstr`_ [match strings](#match-strings), it also checks to make sure that the `scheduling` parameter is set to `True` (and fails if it isn't).  The check will also fail if `qmgr` does not return within the specified timeout.
+`check_moab_torque` executes `qmgr -c 'print server'` and examines its output, similarly to `check_cmd_output`.  In addition to the arbitrary positive/negative `mstr` [match strings](#match-strings), it also checks to make sure that the `scheduling` parameter is set to `True` (and fails if it isn't).  The check will also fail if `qmgr` does not return within the specified timeout.
 
 _**Example** (basic TORQUE configuration/responsiveness sanity check)_:  `check_moab_torque -t 45`
 
@@ -1001,7 +1001,7 @@ check_ps_cpu
 | `-K` | Kill **parent** of matching process (or processes, if used with `-a`) with SIGKILL.  (NOTE:  Does NOT imply `-k`) |
 | `-k` | Kill matching process (or processes, if used with `-a`) with SIGKILL. |
 | `-l` | Log matching process (or processes, if used with `-a`) to NHC log (`$LOGFILE`). |
-| `-m`_`mstr`_ | Look only at processes matching _mstr_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
+| `-m``mstr` | Look only at processes matching _mstr_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
 | `-r`_`value`_ | Renice matching process (or processes, if used with `-a`) by the specified _`value`_ (may be positive or negative). |
 | `-s` | Log matching process (or processes, if used with `-a`) to the syslog. |
 | `-u [!]`_`user`_ | User match.  Matches only processes owned by _user_ (or, if negated, NOT owned by _user_). |
@@ -1055,7 +1055,7 @@ check_ps_mem
 | `-K` | Kill **parent** of matching process (or processes, if used with `-a`) with SIGKILL.  (NOTE:  Does NOT imply `-k`) |
 | `-k` | Kill matching process (or processes, if used with `-a`) with SIGKILL. |
 | `-l` | Log matching process (or processes, if used with `-a`) to NHC log (`$LOGFILE`). |
-| `-m`_`mstr`_ | Look only at processes matching _mstr_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
+| `-m``mstr` | Look only at processes matching _mstr_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
 | `-r`_`value`_ | Renice matching process (or processes, if used with `-a`) by the specified _`value`_ (may be positive or negative). |
 | `-s` | Log matching process (or processes, if used with `-a`) to the syslog. |
 | `-u` [!]_`user`_ | User match.  Matches only processes owned by _user_ (or, if negated, NOT owned by _user_). |
@@ -1078,7 +1078,7 @@ check_ps_physmem
 | `-K` | Kill **parent** of matching process (or processes, if used with `-a`) with SIGKILL.  (NOTE:  Does NOT imply `-k`) |
 | `-k` | Kill matching process (or processes, if used with `-a`) with SIGKILL. |
 | `-l` | Log matching process (or processes, if used with `-a`) to NHC log (`$LOGFILE`). |
-| `-m`_`mstr`_ | Look only at processes matching _match_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
+| `-m``mstr` | Look only at processes matching _match_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
 | `-r`_`value`_ | Renice matching process (or processes, if used with `-a`) by the specified _`value`_ (may be positive or negative). |
 | `-s` | Log matching process (or processes, if used with `-a`) to the syslog. |
 | `-u` [!]_`user`_ | User match.  Matches only processes owned by _user_ (or, if negated, NOT owned by _user_). |
@@ -1095,16 +1095,16 @@ check_ps_service
 | **Check Option** | **Purpose** |
 | ---------------- | ----------- |
 | `-0` | Non-fatal.  Failure of this check will be ignored. |
-| `-S` | Start service.  Service _service_ will be started if not found running.  Equivalent to `-e '/sbin/service `_`service`_` start'` |
-| `-c` | Cycle service.  Service _service_ will be cycled if not found running.  Equivalent to `-e '/sbin/service `_`service`_` stop ; sleep 2 ; /sbin/service `_`service`_` start'` |
-| `-d`_`daemon`_ | Match running process by _daemon_ instead of _service_.  Equivalent to `-m`_`'*daemon'`_ |
+| `-S` | Start service.  Service `service` will be started if not found running.  Equivalent to `-e '/sbin/service `_`service`_` start'` |
+| `-c` | Cycle service.  Service `service` will be cycled if not found running.  Equivalent to `-e '/sbin/service `_`service`_` stop ; sleep 2 ; /sbin/service `_`service`_` start'` |
+| `-d`_`daemon`_ | Match running process by _daemon_ instead of `service`.  Equivalent to `-m`_`'*daemon'`_ |
 | `-e`_`action`_ | Execute `/bin/bash -c`_`action`_ if process IS NOT found running. |
 | `-E`_`action`_ | Execute `/bin/bash -c`_`action`_ if process IS found running. |
 | `-f` | Full match.  Match against entire command line, not just first word. |
-| `-k` | Kill service.  Service _service_ will be killed (and check will fail) if found running.    Similar to `pkill -9 `_`service`_ |
-| `-m`_`mstr`_ | Use _match_ to search the process list for the service.  Default is _`*service`_ |
-| `-r` | Restart service.  Service _service_ will be restarted if not found running.  Equivalent to `-e '/sbin/service `_`service`_` restart'` |
-| `-s` | Stop service.  Service _service_ will be stopped (and check will fail) if found running.  Performs `/sbin/service `_`service`_` stop` |
+| `-k` | Kill service.  Service `service` will be killed (and check will fail) if found running.    Similar to `pkill -9 `_`service`_ |
+| `-m``mstr` | Use _match_ to search the process list for the service.  Default is _`*service`_ |
+| `-r` | Restart service.  Service `service` will be restarted if not found running.  Equivalent to `-e '/sbin/service `_`service`_` restart'` |
+| `-s` | Stop service.  Service `service` will be stopped (and check will fail) if found running.  Performs `/sbin/service `_`service`_` stop` |
 | `-u` [!]_`user`_ | User match.  Matches only processes owned by _user_ (or, if negated, NOT owned by _user_). |
 
 _**Example** (look for a root-owned sshd and start if missing)_:  `check_ps_service -u root -S sshd`
@@ -1125,7 +1125,7 @@ check_ps_time
 | `-K` | Kill **parent** of matching process (or processes, if used with `-a`) with SIGKILL.  (NOTE:  Does NOT imply `-k`) |
 | `-k` | Kill matching process (or processes, if used with `-a`) with SIGKILL. |
 | `-l` | Log matching process (or processes, if used with `-a`) to NHC log (`$LOGFILE`). |
-| `-m`_`mstr`_ | Look only at processes matching _match_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
+| `-m``mstr` | Look only at processes matching _match_ (NHC [match string](#match-strings), possibly negated).  Default is to check all processes. |
 | `-r`_`value`_ | Renice matching process (or processes, if used with `-a`) by the specified _`value`_ (may be positive or negative). |
 | `-s` | Log matching process (or processes, if used with `-a`) to the syslog. |
 | `-u` [!]_`user`_ | User match.  Matches only processes owned by _user_ (or, if negated, NOT owned by _user_). |
